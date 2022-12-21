@@ -21,7 +21,7 @@ function activate(context) {
 			const selection = editor.selection;
 			const text = editor.document.getText(selection);
 			const language = editor.document.languageId;
-			const formattedText = `\`\`\`${language}\n${text.trim()}\n\`\`\``;
+			const formattedText = `\`\`\`${language}\n${text}\n\`\`\``;
 
 			vscode.env.clipboard.writeText(formattedText);
 		}
