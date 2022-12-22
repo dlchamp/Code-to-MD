@@ -12,25 +12,10 @@ The goal of this extension is to provide a utility that helps users always have 
 
 ## Example
 
-![Example](https://github.com/dlchamp/Code-to-MD/blob/master/images/example.gif?raw=truef)
+![Example](https://github.com/dlchamp/Code-to-MD/blob/master/images/example.gif?raw=true)
 
 
-## Version 0.0.5
-    - Add example as gif 
 
-
-## Version 0.0.4
-    - Add as editor context menu option
-    - Integrated basic formatting for js/ts, python, and json
-    - clean up code
-    - update readme / include example video
-    - add new dependency, json5
-
-## Version 0.0.3
-    - Remove the whitespace trimming from `copy-to-discord` command
-
-## Version 0.0.2
-    - Update readme with how-to instructions
 
 ## Version 0.0.1   
     - Initial release
