@@ -1,6 +1,6 @@
-const { ConsoleReporter } = require('@vscode/test-electron');
 const vscode = require('vscode');
 const json5 = require('json5')
+
 
 function activate(context) {
 	vscode.commands.registerCommand('code-to-md.copyToDiscord', copyToDiscord);
