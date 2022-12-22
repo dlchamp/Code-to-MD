@@ -1,50 +1,88 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
+const { ConsoleReporter } = require('@vscode/test-electron');
 const vscode = require('vscode');
+const json5 = require('json5')
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
-
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
-
-	vscode.commands.registerCommand('code-to-md.copyToDiscord', function () {
-		// Copy the snippet to the clipboard matching Discord's markdown formatting
-		// \`\`\` {language}
-		// 	# selected code
-		// \`\`\``
-
-		{
-			const editor = vscode.window.activeTextEditor;
-			const selection = editor.selection;
-			const text = editor.document.getText(selection);
-			const language = editor.document.languageId;
-			const formattedText = `\`\`\`${language}\n${text}\n\`\`\``;
-
-			vscode.env.clipboard.writeText(formattedText);
-		}
-	});
-
-	vscode.commands.registerCommand('code-to-md.copytoReddit', function () {
-		// Copy the selected snippet to the clipboard using Reddit's old style markdown formatting
-		// Where each line of code has affixed 4 extra spaces 
-
-		{
-			const editor = vscode.window.activeTextEditor;
-			const selection = editor.selection;
-			const text = editor.document.getText(selection);
-			const formattedText = text.trim().split('\n').map(line => '    ' + line).join('\n');
-
-			vscode.env.clipboard.writeText(formattedText);
-		}
-	});
+	vscode.commands.registerCommand('code-to-md.copyToDiscord', copyToDiscord);
+	vscode.commands.registerCommand('code-to-md.copyToReddit', copyToReddit);
 }
 
 function deactivate() { }
 
+function getEditorSelection() {
+
+	const editor = vscode.window.activeTextEditor;
+	const selectedText = editor.document.getText(editor.selection).trim();
+	const language = editor.document.languageId;
+	const prettifiedText = formatSelectedText(selectedText, language);
+
+	return [prettifiedText, language];
+}
+
+function copyToDiscord() {
+
+	const [text, language] = getEditorSelection();
+	const formattedText = `\`\`\`${language}\n${text}\n\`\`\``;
+
+	vscode.env.clipboard.writeText(formattedText);
+}
+
+function copyToReddit() {
+
+	const [text, _] = getEditorSelection();
+	const formattedText = text.split('\n').map(line => '    ' + line).join('\n');
+
+	vscode.env.clipboard.writeText(formattedText);
+}
+
+function formatSelectedText(text, language) {
+
+	if (language == 'python') {
+
+		let pyFormatter = vscode.workspace.getConfiguration(null).get('python.formatting.provider') ||
+			'ms-python.python';
+		let pyFormatterExtension = vscode.extensions.getExtension(pyFormatter);
+
+		if (pyFormatterExtension) {
+
+			let api = pyFormatterExtension.exports;
+
+			return api.formatDocument(text, language);
+
+		} else {
+
+			return text;
+		}
+
+	} else if (['javascript', 'typescript'].includes(language)) {
+
+		let jsFormatter = vscode.workspace.getConfiguration(null).get('javascript.format.enable') ||
+			'vscode.typescript.language-features';
+		let jsFormatterExtension = vscode.extensions.getExtension(jsFormatter);
+
+		if (jsFormatterExtension) {
+
+			let api = jsFormatterExtension.exports;
+
+			return api.formatDocument(text, language);
+
+		} else {
+
+			return text;
+		}
+
+	} else if (language == 'json') {
+
+		try {
+			return JSON.stringify(json5.parse(text), null, 2);
+		} catch (error) {
+			return text;
+		}
+
+	} else { return text }
+}
+
 module.exports = {
 	activate,
-	deactivate
-}
+	deactivate,
+};
