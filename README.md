@@ -12,8 +12,11 @@ The goal of this extension is to provide a utility that helps users always have 
 
 ## Example
 
-https://giant.gfycat.com/SmartAlarmingGermanspaniel.mp4
+![Example](https://github.com/dlchamp/Code-to-MD/blob/master/images/example.gif?raw=truef)
 
+
+## Version 0.0.5
+    - Add example as gif 
 
 
 ## Version 0.0.4
