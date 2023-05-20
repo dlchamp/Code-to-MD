@@ -1,6 +1,5 @@
 const vscode = require('vscode');
-const json5 = require('json5')
-
+const json5 = require('json5');
 
 function activate(context) {
 	vscode.commands.registerCommand('code-to-md.copyToDiscord', copyToDiscord);
@@ -9,78 +8,71 @@ function activate(context) {
 
 function deactivate() { }
 
-function getEditorSelection() {
-
+async function getEditorSelection() {
 	const editor = vscode.window.activeTextEditor;
-	const selectedText = editor.document.getText(editor.selection).trim();
+	const selectedText = editor.document.getText(editor.selection);
 	const language = editor.document.languageId;
-	const prettifiedText = formatSelectedText(selectedText, language);
+	const prettifiedText = await formatSelectedText(selectedText, language);
 
 	return [prettifiedText, language];
 }
 
-function copyToDiscord() {
+function removeInitialIndentation(text) {
+	const lines = text.split('\n');
+	const minIndentation = Math.min(
+		...lines
+			.filter(line => line.trim())
+			.map(line => line.match(/^\s*/)[0].length)
+	);
 
-	const [text, language] = getEditorSelection();
-	const formattedText = `\`\`\`${language}\n${text}\n\`\`\``;
-
-	vscode.env.clipboard.writeText(formattedText);
+	return lines
+		.map(line => line.slice(minIndentation))
+		.join('\n');
 }
+
+function copyToDiscord() {
+	getEditorSelection().then(([text, language]) => {
+		const leftAlignedText = removeInitialIndentation(text);
+		const formattedText = `\`\`\`${language}\n${leftAlignedText}\n\`\`\``;
+		vscode.env.clipboard.writeText(formattedText);
+	});
+}
+
+
 
 function copyToReddit() {
-
-	const [text, _] = getEditorSelection();
-	const formattedText = text.split('\n').map(line => '    ' + line).join('\n');
-
-	vscode.env.clipboard.writeText(formattedText);
+	getEditorSelection().then(([text, _]) => {
+		const formattedText = text.split('\n').map(line => '  ' + line).join('\n');
+		vscode.env.clipboard.writeText(formattedText);
+	});
 }
 
-function formatSelectedText(text, language) {
 
-	if (language == 'python') {
+async function formatSelectedText(text, language) {
+	const untitledDocument = await vscode.workspace.openTextDocument({
+		content: text,
+		language,
+	});
 
-		let pyFormatter = vscode.workspace.getConfiguration(null).get('python.formatting.provider') ||
-			'ms-python.python';
-		let pyFormatterExtension = vscode.extensions.getExtension(pyFormatter);
+	const formattedDocument = await vscode.commands.executeCommand(
+		'editor.action.formatDocument',
+		untitledDocument.uri,
+	);
 
-		if (pyFormatterExtension) {
+	const formattedText = formattedDocument ? formattedDocument.getText() : text;
 
-			let api = pyFormatterExtension.exports;
+	// Calculate the initial indentation of the first line
+	const initialIndentation = formattedText.match(/^\s*/)[0];
 
-			return api.formatDocument(text, language);
+	// Remove the initial indentation from all lines
+	const leftAlignedText = formattedText
+		.split('\n')
+		.map(line => line.replace(initialIndentation, ''))
+		.join('\n');
 
-		} else {
-
-			return text;
-		}
-
-	} else if (['javascript', 'typescript'].includes(language)) {
-
-		let jsFormatter = vscode.workspace.getConfiguration(null).get('javascript.format.enable') ||
-			'vscode.typescript.language-features';
-		let jsFormatterExtension = vscode.extensions.getExtension(jsFormatter);
-
-		if (jsFormatterExtension) {
-
-			let api = jsFormatterExtension.exports;
-
-			return api.formatDocument(text, language);
-
-		} else {
-
-			return text;
-		}
-
-	} else if (language == 'json') {
-
-		try {
-			return JSON.stringify(json5.parse(text), null, 2);
-		} catch (error) {
-			return text;
-		}
-
-	} else { return text }
+	return leftAlignedText;
 }
+
 
 module.exports = {
 	activate,
