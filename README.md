@@ -13,9 +13,3 @@ The goal of this extension is to provide a utility that helps users always have 
 ## Example
 
 ![Example](https://github.com/dlchamp/Code-to-MD/blob/master/images/example.gif?raw=true)
-
-
-
-
-## Version 0.0.1   
-    - Initial release
