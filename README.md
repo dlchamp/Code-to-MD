@@ -13,3 +13,13 @@ The goal of this extension is to provide a utility that helps users always have 
 ## Example
 
 ![Example](https://github.com/dlchamp/Code-to-MD/blob/master/images/example.gif?raw=true)
+
+
+
+# Disclaimer and Notes:
+
+- I use old reddit, so the "Copy to Reddit" function is specifically designed for that.
+- You can use the "Copy to Discord" or "Copy to Reddit" when copying to New Reddit, but you must be in markdown mode.  Fancy Pants editor seems to cause weird issues when pasting  
+- When using the "Copy to Discord" button, it will include the language for proper syntax highlighting (ex: \`\`\`python {code} \`\`\`)  
+- When copying functions or code that is indented away from the left margin, be sure to highlight all the way to the margin before copying so that it knows how to properly handle formatting the code under the first line
+- It's only been tested with Python, JS/TS, and JSON.   It might work with other languages, but I can't guarantee it's success.
