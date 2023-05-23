@@ -20,6 +20,8 @@ The goal of this extension is to provide a utility that helps users always have 
     - [Click Here](https://marketplace.visualstudio.com/items?itemName=DLCHAMP.code-to-markdown)
 
 
+- Install via Open-VSX
+    - [Click Here](https://open-vsx.org/extension/DLCHAMP/code-to-markdown)
 
 ## Instructions
 
