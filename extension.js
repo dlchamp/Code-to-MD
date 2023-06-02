@@ -19,6 +19,10 @@ async function formatSelectedText(text, language) {
 	return leftAlignedText;
 }
 
+function escapeBackticks(text) {
+	return text.replace(/`/g, '\\`');
+}
+
 function removeInitialIndentation(text) {
 	const lines = text.split('\n');
 	const minIndentation = Math.min(...lines.filter(line => line.trim()).map(line => line.match(/^\s*/)[0].length));
@@ -28,14 +32,16 @@ function removeInitialIndentation(text) {
 
 async function copyToDiscord() {
 	const [text, language] = await getEditorSelection();
-	const leftAlignedText = removeInitialIndentation(text);
+	const escapedText = escapeBackticks(text)
+	const leftAlignedText = removeInitialIndentation(escapedText);
 	const formattedText = `\`\`\`${language}\n${leftAlignedText}\n\`\`\``;
 	await vscode.env.clipboard.writeText(formattedText);
 }
 
 async function copyToReddit() {
 	const [text, _] = await getEditorSelection();
-	const formattedText = text.split('\n').map(line => '    ' + line).join('\n');
+	const leftAlignedText = removeInitialIndentation(text)
+	const formattedText = leftAlignedText.split('\n').map(line => '    ' + line).join('\n');
 	await vscode.env.clipboard.writeText(formattedText);
 }
 
