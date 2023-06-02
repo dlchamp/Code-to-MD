@@ -2,7 +2,7 @@
   "name": "code-to-markdown",
   "displayName": "Code To Markdown",
   "description": "Copy selected code snippets in ready-to-paste formatting for Discord or Reddit markdown",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "publisher": "DLCHAMP",
   "author": {
     "name": "DLCHAMP"
