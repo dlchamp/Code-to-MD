@@ -21,8 +21,9 @@ async function formatSelectedText(text, language) {
 
 function escapeBackticks(text) {
 	if (/```/.test(text)) {
-		return text.replace(/`/g, '\\`');
+		return text.replace(/```/g, '\\`\\`\\`');
 	}
+	return text
 }
 
 function removeInitialIndentation(text) {
