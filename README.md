@@ -7,9 +7,9 @@ The goal of this extension is to provide a utility that helps users always have 
 ## Installation
 
 - Installing via .vsix file (windows)
-    - Download the latest [release](https://github.com/dlchamp/Code-to-MD/releases/tag/v0.5.2)
+    - Download the latest [release](https://github.com/dlchamp/Code-to-MD/releases/tag/v0.5.3)
     - Open Windows Command Prompt in at the location where you downloaded the file to
-    - run `code --install-extension code-to-markdown-0.5.2.vsix`
+    - run `code --install-extension code-to-markdown-0.5.3.vsix`
 
 - Installing via VSCode
     - Navigate to Extensions (Ctrl+Shift+X)
