@@ -7,9 +7,9 @@ The goal of this extension is to provide a utility that helps users always have 
 ## Installation
 
 - Installing via .vsix file (windows)
-    - Download the latest [release](https://github.com/dlchamp/Code-to-MD/releases/tag/v0.5.3)
+    - Download the latest [release](https://github.com/dlchamp/Code-to-MD/releases/tag/v0.5.4)
     - Open Windows Command Prompt in at the location where you downloaded the file to
-    - run `code --install-extension code-to-markdown-0.5.3.vsix`
+    - run `code --install-extension code-to-markdown-0.5.4.vsix`
 
 - Installing via VSCode
     - Navigate to Extensions (Ctrl+Shift+X)
@@ -26,7 +26,7 @@ The goal of this extension is to provide a utility that helps users always have 
 ## Instructions
 
 1. Select a snippet of code from your project
-2. Right-click and Select `Copy to Discord` or `Copy to Reddit`
+2. Right-click and Select `Copy for Discord/New Reddit` or `Copy for Old Reddit`
 3. Paste the selected and now formatted code within a Reddit post or comment, or Discord chat box.
 
 ## Example
@@ -36,11 +36,9 @@ The goal of this extension is to provide a utility that helps users always have 
 
 
 # Disclaimer and Notes:
-
-- I use old reddit, so the "Copy to Reddit" function is specifically designed for that.
-- You can use the "Copy to Discord" or "Copy to Reddit" when copying to New Reddit, but you must be in markdown mode.  Fancy Pants editor seems to cause weird issues when pasting  
-- When using the "Copy to Discord" button, it will include the language for proper syntax highlighting (ex: \`\`\`python {code} \`\`\`)  
+- You can use the "Copy for Discord/New Reddit" or "Copy for Old Reddit" when copying to New Reddit, but you must be in markdown mode.  Fancy Pants editor seems to cause weird issues when pasting  
+- When using the "Copy for Discord/New Reddit" button, it will include the language for proper syntax highlighting (ex: \`\`\`lang {code} \`\`\`)  
 - When copying functions or code that is indented away from the left margin, be sure to highlight all the way to the margin before copying so that it knows how to properly handle formatting the code under the first line
-- It's only been tested with Python, JS/TS, and JSON.   It might work with other languages, but I can't guarantee it's success.
+- It's only been tested with Python, JS/TS, and JSON.   It might work with other languages, but I can't guarantee its success.
 
 
