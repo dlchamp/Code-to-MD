@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.5.5 - Documentation adjustments
+- This is just a documentation change to the changelog and readme.md that should have been included in v0.5.4
+
 ## Version 0.5.4 - Dependency updates
 - Update all dependencies to the latest versions
 - Rename copy options
