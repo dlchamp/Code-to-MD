@@ -1,5 +1,11 @@
 # Changelog
 
+## Version 0.5.4 - Dependency updates
+- Update all dependencies to the latest versions
+- Rename copy options
+    - Copy to Discord -> Copy for Discord/New Reddit
+    - Copy to Reddit -> Copy for Old Reddit
+
 ## Version 0.5.3 - Remove unnecessary opening of new document
 - Previously when selecting code and choosing to Copy to Discord/Reddit, it would open a new document with your selected code.  This has been removed
 
